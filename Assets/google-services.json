@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1062928973406",
+    "firebase_url": "https://p-desu-ka-default-rtdb.firebaseio.com",
+    "project_id": "p-desu-ka",
+    "storage_bucket": "p-desu-ka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062928973406:android:cf503ad595e63247757ecf",
+        "android_client_info": {
+          "package_name": "com.jam.pdesuka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPE2VfkoKh0N06J5bgvK2wixYk9Z13MnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
