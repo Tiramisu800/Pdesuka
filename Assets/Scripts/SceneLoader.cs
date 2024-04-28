@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private string musicName;
+    [SerializeField] private string _musicName;
     private void Start()
     {
-        MusicManager.Instance.PlayMusic(musicName);
+        MusicManager.Instance.PlayMusic(_musicName);
     }
     public void LoadScene(int sceneIndex)
     {

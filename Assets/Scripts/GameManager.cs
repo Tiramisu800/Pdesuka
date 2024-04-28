@@ -11,7 +11,7 @@ namespace Pdesuka.Manager
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private string musicName;
+        [SerializeField] private string _musicName;
         [SerializeField] private Player _player;
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private TMP_Text _causeDeathText;
@@ -28,7 +28,7 @@ namespace Pdesuka.Manager
         {
             _anim = GetComponent<Animator>();
 
-            MusicManager.Instance.PlayMusic(musicName);
+            MusicManager.Instance.PlayMusic(_musicName);
         }
         private void Update()
         {

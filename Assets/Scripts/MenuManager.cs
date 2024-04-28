@@ -49,7 +49,7 @@ namespace Pdesuka.Manager
         {
             SoundManager.Instance.PlaySound("UI");
             _userName = _inputName.text;
-            SceneManager.LoadScene(21);
+            SceneManager.LoadScene(27);
         }
   
         public void LoadPlayerData()

@@ -246,16 +246,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: de39bdf7a54145c47a83890f7088a34a, type: 3}
   - nameID: Dash
     clip: {fileID: 8300000, guid: 8be48882724d01f40b1d518e26bd91d0, type: 3}
-  - nameID: Chat
-    clip: {fileID: 8300000, guid: 1dd61548f78b6634596e7ce4c392155c, type: 3}
   - nameID: Door
     clip: {fileID: 8300000, guid: 038fee8dd59d8214bae19c78109aeeeb, type: 3}
   - nameID: Door_Wrong
     clip: {fileID: 8300000, guid: 853dd4fcdc0a5274a9b0e8628ca7c5b5, type: 3}
-  - nameID: P_Awake
-    clip: {fileID: 8300000, guid: 984ba971b57f52c4983de675e650e9b5, type: 3}
-  - nameID: F_Sparta
-    clip: {fileID: 8300000, guid: 99a6b6b812fa6bd41b06ea5aec6344af, type: 3}
 --- !u!114 &567078407
 MonoBehaviour:
   m_ObjectHideFlags: 0
