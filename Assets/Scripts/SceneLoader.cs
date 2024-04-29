@@ -14,6 +14,7 @@ public class SceneLoader : MonoBehaviour
     }
     public void LoadScene(int sceneIndex)
     {
+        SoundManager.Instance.PlaySound("UI");
         SceneManager.LoadScene(sceneIndex);
     }
 }

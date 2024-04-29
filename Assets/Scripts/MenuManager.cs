@@ -34,13 +34,10 @@ namespace Pdesuka.Manager
                 Destroy(gameObject);
             }
         }
-
-        private void Start()
-        {
-            MusicManager.Instance.PlayMusic("Menu");
-        }
         public void OnEnable()
         {
+            MusicManager.Instance.PlayMusic("Menu");
+
             DataController.OnDataLoaded += UsePlayerData;
             _playNewGame.onClick.AddListener(SetUserName);
             _continueGame.onClick.AddListener(LoadPlayerData);

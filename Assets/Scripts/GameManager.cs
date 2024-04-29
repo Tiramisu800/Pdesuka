@@ -87,6 +87,7 @@ namespace Pdesuka.Manager
         //Load level
         public void LoadScene(int sceneNumber)
         {
+            SoundManager.Instance.PlaySound("UI");
             SceneManager.LoadScene(sceneNumber);
             if (isPaused == true)
             {
@@ -97,6 +98,8 @@ namespace Pdesuka.Manager
 
         public void SaveQuit()
         {
+            SoundManager.Instance.PlaySound("UI");
+
             var username = MenuManager.Instance._userName;
             var sceneIndex = SceneManager.GetActiveScene().buildIndex;
             var timescore = _timeScore;
