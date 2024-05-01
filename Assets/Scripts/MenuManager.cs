@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using Pdesuka.Data;
 using UnityEngine.UI;
+using Firebase.Database;
+using static Pdesuka.Data.DataController;
+using System;
 
 namespace Pdesuka.Manager
 {
@@ -14,13 +17,9 @@ namespace Pdesuka.Manager
     {
         public static MenuManager Instance;
 
-        public TMP_InputField _inputName;
+        [SerializeField] private TMP_InputField _inputName;
         public string _userName;
-
-        [SerializeField] private Button _playNewGame;
-        [SerializeField] private Button _continueGame;
-
-        private DataController _dataController;
+        public bool isContinue = false;
 
         private void Awake()
         {
@@ -34,33 +33,49 @@ namespace Pdesuka.Manager
                 Destroy(gameObject);
             }
         }
-        public void OnEnable()
+        private void Start()
         {
             MusicManager.Instance.PlayMusic("Menu");
-
-            DataController.OnDataLoaded += UsePlayerData;
-            _playNewGame.onClick.AddListener(SetUserName);
-            _continueGame.onClick.AddListener(LoadPlayerData);
         }
+        private void OnEnable()
+        {
+            DataController.Instance.LoadedData += LoadedData;
+        }
+
+        //Start Game
         public void SetUserName()
         {
             SoundManager.Instance.PlaySound("UI");
             _userName = _inputName.text;
+        }
+        public void GoNextScene()
+        {
             SceneManager.LoadScene(27);
         }
   
-        public void LoadPlayerData()
+        //Continue
+        public void LoadData()
         {
+            isContinue = true;
             SoundManager.Instance.PlaySound("UI");
-            _dataController.LoadData(_inputName.text);
+            DataController.Instance.LoadData(_userName);
+            Debug.Log("Data Loaded");
+        }
+
+        private void LoadedData(DataController.DataToSave loadedData)
+        {
+            Debug.Log(loadedData.UserName);
+            if (loadedData.TimeScore == 0)
+            {
+                SceneManager.LoadScene(loadedData.CurrentLevelIndex);
+            }
+            else
+            {
+                SceneManager.LoadScene(loadedData.CurrentLevelIndex + 1);
+            }
             
         }
 
-        public void UsePlayerData(DataToSave data)
-        {
-            SceneManager.LoadScene(data.CurrentLevelIndex);
-        }
-        
     }
 
 }

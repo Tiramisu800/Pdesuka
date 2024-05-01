@@ -6,14 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class CutsceneTimer : MonoBehaviour
 {
-    [SerializeField] private string _musicName;
     [SerializeField] private float _time;
     [SerializeField] private int _sceneIndex;
     
-    void Start()
-    {
-        MusicManager.Instance.PlayMusic(_musicName);
-    }
 
     void Update()
     {

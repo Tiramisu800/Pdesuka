@@ -8,85 +8,76 @@ using UnityEngine.SocialPlatforms.Impl;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine.SocialPlatforms;
+using Pdesuka.Manager;
 
 namespace Pdesuka.Data
 {
     public class DataController : MonoBehaviour
     {
-        public static event Action<DataToSave> OnDataLoaded;
+        public static DataController Instance;
 
-        static DatabaseReference _databaseReference;
-        //public static DataToSave _playerData;
+        public List<DataToSave> userManyData = new List<DataToSave>();
 
-        //public static List<DataToSave> playerDatas = new List<DataToSave>();
-
+        public event Action<DataToSave> LoadedData;
+        public event Action<List<DataToSave>> LoadedAllData;
 
         private void Awake()
         {
-            _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-        }
-        
-        /*
-        public static void SaveData(string userName, int sceneIndex, float timeScore)
-        {
-            string json = JsonUtility.ToJson(new DataToSave(userName, sceneIndex, timeScore));
-            _databaseReference.Child("users").Child(userName).SetRawJsonValueAsync(json);
-        }
-        */
-
-        public static void SaveData(string userName, int sceneIndex, float timeScore)
-        {
-            FirebaseDatabase.DefaultInstance.RootReference.Child("users").GetValueAsync().ContinueWithOnMainThread(task =>
+            if (Instance == null)
             {
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("Failed to load data from Firebase.");
-                }
-                else if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-
-                    Debug.Log(snapshot.GetRawJsonValue());
-
-                    var playerData = JsonUtility.FromJson<DataToSave>(snapshot.GetRawJsonValue());
-
-                    _databaseReference.Child("users").Child(userName).SetRawJsonValueAsync(JsonUtility.ToJson(new DataToSave(userName, sceneIndex, timeScore)));
-                }
-            });
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
-        /*
-        public static void SaveData(string userName, int sceneIndex, float timeScore)
+        public void SaveData(string userName, string sceneIndex, float timeScore)
         {
-            var serverData = _databaseReference.Child("users").Child(userName).GetValueAsync();
+            string json = JsonUtility.ToJson(new DataToSave(userName, int.Parse(sceneIndex), timeScore));
+            FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).Child(sceneIndex).SetRawJsonValueAsync(json);
+        }
+        /*
+        public void SaveData(string userName, string sceneIndex, float timeScore)
+        {
+            StartCoroutine(SaveDataE(userName, sceneIndex, timeScore));
+        }
+        IEnumerator SaveDataE(string userName, string sceneIndex, float timeScore)
+        {
+            var serverData = FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(sceneIndex).Child(userName).GetValueAsync();
+            yield return new WaitUntil(predicate: () => serverData.IsCompleted);
+
             DataSnapshot snapshot = serverData.Result;
-            foreach (var child in snapshot.Children)
+
+            if (snapshot != null)
             {
-                var playerData = JsonUtility.FromJson<DataToSave>(child.GetRawJsonValue());
-
-                if (!playerDatas.Contains(playerData))
+                foreach (var child in snapshot.Children)
                 {
-                    playerDatas.Add(playerData);
-                }
+                    var user = JsonUtility.FromJson<DataToSave>(child.GetRawJsonValue());
 
-                if (playerData.UserName == userName)
-                {
-                    if (playerData.CurrentLevelIndex == sceneIndex)
+                    if (user.TimeScore < timeScore)
                     {
-                        if (playerData.TimeScore < timeScore)
-                        {
-                            FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).SetRawJsonValueAsync(JsonUtility.ToJson(new DataToSave(userName, sceneIndex, timeScore)));
-                        }
-                    }     
+                        string json = JsonUtility.ToJson(new DataToSave(userName, int.Parse(sceneIndex), timeScore));
+                        FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(sceneIndex).Child(userName).SetRawJsonValueAsync(json);
+                    }
+                    else
+                    {
+                        string json = JsonUtility.ToJson(new DataToSave(userName, int.Parse(sceneIndex), user.TimeScore));
+                        FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(sceneIndex).Child(userName).SetRawJsonValueAsync(json);
+                    }
                 }
-                else
-                {
-                    FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).SetRawJsonValueAsync(JsonUtility.ToJson(new DataToSave(userName, sceneIndex, timeScore)));
-                }
+            }
+            else
+            {
+                Debug.Log("No data, saving new data");
+                string json = JsonUtility.ToJson(new DataToSave(userName, int.Parse(sceneIndex), timeScore));
+                FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(sceneIndex).Child(userName).SetRawJsonValueAsync(json);
             }
         }
         */
-
+        
         public void LoadData(string userName)
         {
             StartCoroutine(LoadDataE(userName));
@@ -94,57 +85,53 @@ namespace Pdesuka.Data
 
         IEnumerator LoadDataE(string userName)
         {
-            var serverData = _databaseReference.Child("users").Child(userName).GetValueAsync();
+            var serverData = FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).GetValueAsync();
             yield return new WaitUntil(predicate: () => serverData.IsCompleted);
 
             DataSnapshot snapshot = serverData.Result;
-            string jsonData = snapshot.GetRawJsonValue();
 
-            if (jsonData != null)
+            if (snapshot != null)
             {
-                var playerData = JsonUtility.FromJson<DataToSave>(jsonData);
+                foreach (var child in snapshot.Children)
+                {
+                    var user = JsonUtility.FromJson<DataToSave>(child.GetRawJsonValue());
 
-                OnDataLoaded?.Invoke(playerData);
+                    if (!userManyData.Contains(user))
+                    {
+                        userManyData.Add(user);
+                    }
+                }
+
+                if (MenuManager.Instance.isContinue == true)
+                {
+                    var index = userManyData.Count - 1;
+                    LoadedData?.Invoke(userManyData[index]);
+                    MenuManager.Instance.isContinue = false;
+                }
+                
+                LoadedAllData?.Invoke(userManyData);
             }
             else
             {
                 Debug.Log("No data");
+            } 
+
+        }
+
+
+        [Serializable]
+        public class DataToSave
+        {
+            public string UserName;
+            public int CurrentLevelIndex;
+            public float TimeScore;
+
+            public DataToSave(string userName, int currentLevelIndex, float timeScore)
+            {
+                UserName = userName;
+                CurrentLevelIndex = currentLevelIndex;
+                TimeScore = timeScore;
             }
-
-        }
-        
-
-        /*
-        public void LoadData(string userName)
-        {
-            Task.Run(async () => await FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).GetValueAsync().ContinueWith(OnData));
-        }
-        private void OnData(Task<DataSnapshot> task)
-        {
-            DataSnapshot snapshot = task.Result;
-            string jsonData = snapshot.GetRawJsonValue();
-
-            _playerData = JsonUtility.FromJson<DataToSave>(jsonData);
-
-            OnDataLoaded?.Invoke(_playerData);
-        }
-        */
-    }
-
-
-
-    [Serializable]
-    public class DataToSave
-    {
-        public string UserName;
-        public int CurrentLevelIndex;
-        public float TimeScore;
-
-        public DataToSave(string userName, int currentLevelIndex, float timeScore)
-        {
-            UserName = userName;
-            CurrentLevelIndex = currentLevelIndex;
-            TimeScore = timeScore;
         }
     }
 

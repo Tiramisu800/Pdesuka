@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Pdesuka.Data;
 using Pdesuka.Enemy;
 using UnityEngine.SocialPlatforms;
+using System;
 
 namespace Pdesuka.Manager
 {
@@ -19,7 +20,6 @@ namespace Pdesuka.Manager
         [SerializeField] private GameObject _pauseScreen;
         [SerializeField] private GameObject _finish;
 
-        //Fade opening
         private Animator _anim;
         private bool isPaused = false;
         private float _timeScore = 0f;
@@ -39,7 +39,6 @@ namespace Pdesuka.Manager
             _anim.SetTrigger("Fade");
         }
 
-        //Kill Action
         private void OnEnable()
         {
             _player.OnKilled += PlayerOnKilled;
@@ -69,19 +68,13 @@ namespace Pdesuka.Manager
             _player.enabled = false;
 
             MusicManager.Instance.PlayMusic("Win");
-
             
             var username = MenuManager.Instance._userName;
-            if (username == null)
-            {
-                Debug.Log("username null");
-            }
-
-            var sceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            var i = SceneManager.GetActiveScene().buildIndex;
+            var sceneIndex = i.ToString();
             var timescore = _timeScore;
 
-            DataController.SaveData(username, sceneIndex, timescore);
-            
+            DataController.Instance.SaveData(username, sceneIndex, timescore);
         }
 
         //Load level
@@ -96,15 +89,19 @@ namespace Pdesuka.Manager
             }
         }
 
+        //Quit level
         public void SaveQuit()
         {
             SoundManager.Instance.PlaySound("UI");
+            AdManager.Instance.ShowRewardedAd();
 
             var username = MenuManager.Instance._userName;
-            var sceneIndex = SceneManager.GetActiveScene().buildIndex;
-            var timescore = _timeScore;
+            var i = SceneManager.GetActiveScene().buildIndex;
+            var sceneIndex = i.ToString();
+            var timescore = 0;
+            DataController.Instance.SaveData(username, sceneIndex, timescore);
 
-            DataController.SaveData(username, sceneIndex, timescore);
+            SceneManager.LoadScene(0);
         }
 
         //Pause
@@ -122,6 +119,8 @@ namespace Pdesuka.Manager
             Time.timeScale = 1f;
             isPaused = false;
         }
+        
+        //Player killed
 
         private void PlayerOnKilled()
         {
@@ -130,6 +129,7 @@ namespace Pdesuka.Manager
             MusicManager.Instance.PlayMusic("Lose");
         }
 
+        // Killed Reasons:
         private void PlayerBecomeKebab()
         {
             _causeDeathText.text = "Become Iced Kebab";
