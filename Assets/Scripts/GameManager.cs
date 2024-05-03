@@ -101,7 +101,7 @@ namespace Pdesuka.Manager
             var timescore = 0;
             DataController.Instance.SaveData(username, sceneIndex, timescore);
 
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(28);
         }
 
         //Pause

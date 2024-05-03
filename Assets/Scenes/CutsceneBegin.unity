@@ -26421,8 +26421,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281874488
-  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -27578,7 +27578,7 @@ PlayableDirector:
   - key: {fileID: -5896804256639099350, guid: 334638d31a0759443a88666378c7e065, type: 2}
     value: {fileID: 606274986}
   - key: {fileID: -3390625693148258419, guid: 334638d31a0759443a88666378c7e065, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 6754561303999738601}
   - key: {fileID: 615672655806646359, guid: 334638d31a0759443a88666378c7e065, type: 2}
     value: {fileID: 1633231980657587451}
   - key: {fileID: 8174558189423649609, guid: 334638d31a0759443a88666378c7e065, type: 2}
@@ -27903,7 +27903,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3684408
+    rgba: 54016056
   m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -49138,8 +49138,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281874488
-  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -49787,8 +49787,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281874488
-  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -52369,6 +52369,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c1b82e06a35fe44aa9f214b2f87746e, type: 3}
+--- !u!95 &6754561303999738601 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6264383345667223916, guid: 2c1b82e06a35fe44aa9f214b2f87746e, type: 3}
+  m_PrefabInstance: {fileID: 6754561303999738600}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6776870303669597034
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52999,8 +53004,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281874488
-  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
