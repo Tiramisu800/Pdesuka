@@ -69,7 +69,7 @@ namespace Pdesuka.Manager
 
             MusicManager.Instance.PlayMusic("Win");
             
-            var username = MenuManager.Instance._userName;
+            var username = PlayerPrefs.GetString("Username");
             var i = SceneManager.GetActiveScene().buildIndex;
             var sceneIndex = i.ToString();
             var timescore = _timeScore;
@@ -95,7 +95,7 @@ namespace Pdesuka.Manager
             SoundManager.Instance.PlaySound("UI");
             AdManager.Instance.ShowRewardedAd();
 
-            var username = MenuManager.Instance._userName;
+            var username = PlayerPrefs.GetString("Username");
             var i = SceneManager.GetActiveScene().buildIndex;
             var sceneIndex = i.ToString();
             var timescore = 0;

@@ -15,24 +15,12 @@ namespace Pdesuka.Manager
 {
     public class MenuManager : MonoBehaviour
     {
-        public static MenuManager Instance;
+        [SerializeField] private Button _play;
+        [SerializeField] private Button _continue;
 
         [SerializeField] private TMP_InputField _inputName;
-        public string _userName;
-        public bool isContinue = false;
+        private string _userName;
 
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
         private void Start()
         {
             MusicManager.Instance.PlayMusic("Menu");
@@ -40,13 +28,36 @@ namespace Pdesuka.Manager
         private void OnEnable()
         {
             DataController.Instance.LoadedData += LoadedData;
+            _play.onClick.AddListener(() => { SetUserName();
+                GoNextScene();
+            });
+            _continue.onClick.AddListener(() =>
+            {
+                SetUserName();
+                LoadData();
+            });
         }
 
         //Start Game
         public void SetUserName()
         {
             SoundManager.Instance.PlaySound("UI");
-            _userName = _inputName.text;
+            if (_inputName.text == string.Empty)
+            {
+                PlayerPrefs.SetString("Username", "guest");
+            }
+            else
+            {
+                PlayerPrefs.SetString("Username", _inputName.text);
+            }
+            PlayerPrefs.Save();
+
+            if (PlayerPrefs.HasKey("Username"))
+            {
+                Debug.Log(PlayerPrefs.GetString("Username"));
+            }
+
+            _userName = PlayerPrefs.GetString("Username");
         }
         public void GoNextScene()
         {
@@ -56,7 +67,6 @@ namespace Pdesuka.Manager
         //Continue
         public void LoadData()
         {
-            isContinue = true;
             SoundManager.Instance.PlaySound("UI");
             DataController.Instance.LoadData(_userName);
             Debug.Log("Data Loaded");

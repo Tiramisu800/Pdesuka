@@ -21,6 +21,8 @@ namespace Pdesuka.Data
         public event Action<DataToSave> LoadedData;
         public event Action<List<DataToSave>> LoadedAllData;
 
+        [SerializeField] private MenuManager _menuManager;
+
         private void Awake()
         {
             if (Instance == null)
@@ -77,10 +79,43 @@ namespace Pdesuka.Data
             }
         }
         */
-        
         public void LoadData(string userName)
         {
             StartCoroutine(LoadDataE(userName));
+        }
+
+        public void LoadManyData(string userName)
+        {
+            userManyData.Clear();
+            StartCoroutine(LoadManyDataE(userName));
+        }
+
+        IEnumerator LoadManyDataE(string userName)
+        {
+            var serverData = FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(userName).GetValueAsync();
+            yield return new WaitUntil(predicate: () => serverData.IsCompleted);
+
+            DataSnapshot snapshot = serverData.Result;
+
+            if (snapshot != null)
+            {
+                foreach (var child in snapshot.Children)
+                {
+                    var user = JsonUtility.FromJson<DataToSave>(child.GetRawJsonValue());
+
+                    if (!userManyData.Contains(user))
+                    {
+                        userManyData.Add(user);
+                    }
+                }
+
+                LoadedAllData?.Invoke(userManyData);
+            }
+            else
+            {
+                Debug.Log("No data");
+            } 
+
         }
 
         IEnumerator LoadDataE(string userName)
@@ -102,20 +137,13 @@ namespace Pdesuka.Data
                     }
                 }
 
-                if (MenuManager.Instance.isContinue == true)
-                {
-                    var index = userManyData.Count - 1;
-                    LoadedData?.Invoke(userManyData[index]);
-                    MenuManager.Instance.isContinue = false;
-                }
-                
-                LoadedAllData?.Invoke(userManyData);
+                var index = userManyData.Count - 1;
+                LoadedData?.Invoke(userManyData[index]);
             }
             else
             {
                 Debug.Log("No data");
-            } 
-
+            }
         }
 
 

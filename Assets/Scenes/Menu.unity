@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userManyData: []
+  _menuManager: {fileID: 1230542536}
 --- !u!4 &60673746
 Transform:
   m_ObjectHideFlags: 0
@@ -2727,6 +2728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfdffaec78e92404d8aae5d5c4aa2950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _play: {fileID: 1848323837}
+  _continue: {fileID: 1562382267}
   _inputName: {fileID: 2140439958}
   _userName: 
   isContinue: 0

@@ -21,17 +21,12 @@ public class ScoreListLoader : MonoBehaviour
     public void ShowScoreList()
     {
         SoundManager.Instance.PlaySound("UI");
-        var username = MenuManager.Instance._userName;
+        var username = PlayerPrefs.GetString("Username");
         _userName.text = username;
-        DataController.Instance.LoadData(username);
+        DataController.Instance.LoadManyData(username);
     }
     private void ResetScoreList(List<DataController.DataToSave> list)
     {
-        foreach (var item in _scoreItems)
-        {
-            Destroy(item.gameObject);
-        }
-
         _scoreItems.Clear();
 
         for (int i = 0; i < list.Count; i++)
