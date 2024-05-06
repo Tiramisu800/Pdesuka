@@ -33,7 +33,7 @@ namespace Pdesuka.Manager
             while (percent < 1)
             {
                 percent += Time.deltaTime * 1 / fadeDuration;
-                musicSource.volume = Mathf.Lerp(0.5f, 0, percent);
+                musicSource.volume = Mathf.Lerp(1f, 0, percent);
                 yield return null;
             }
 
@@ -44,7 +44,7 @@ namespace Pdesuka.Manager
             while (percent < 1)
             {
                 percent += Time.deltaTime * 1 / fadeDuration;
-                musicSource.volume = Mathf.Lerp(0,0.5f,percent);
+                musicSource.volume = Mathf.Lerp(0, 1f,percent);
                 yield return null;
             }
         }
