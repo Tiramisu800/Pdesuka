@@ -10,7 +10,7 @@ public class AdManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
 
     [SerializeField] private string _androidID;
     [SerializeField] private string _iOsID;
-    [SerializeField] private string _adUnitId = "Rewarded_Android";
+    [SerializeField] private string _adUnitId = "Interstitial_Android";
     [SerializeField] private bool _testMode = true;
     private string _gameId;
 
