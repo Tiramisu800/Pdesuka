@@ -175,6 +175,8 @@ public class Dialogue : MonoBehaviour
             _friendAnim.SetTrigger("Jump");
             SoundManager.Instance.PlaySound("Chat");
             _Fdialogue8.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            _Fdialogue8.SetActive(false);
         }
         yield return null;
     }

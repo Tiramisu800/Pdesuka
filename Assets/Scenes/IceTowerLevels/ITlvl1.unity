@@ -4946,6 +4946,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 511965230}
+    - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 708541911}
     - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
       insertIndex: -1
@@ -4953,9 +4956,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1350962772}
-    - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 511965230}
     - targetCorrespondingSourceObject: {fileID: 6292538736804193465, guid: 07831ed92967c4747a311158692f13f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1446228239}
@@ -5705,11 +5705,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3484449111067763597, guid: fa8bb589c7ffe8d42abd313a27d7f0b1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1318
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3484449111067763597, guid: fa8bb589c7ffe8d42abd313a27d7f0b1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -378
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3484449111067763597, guid: fa8bb589c7ffe8d42abd313a27d7f0b1, type: 3}
       propertyPath: m_LocalScale.x
